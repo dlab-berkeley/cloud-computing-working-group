@@ -2,9 +2,9 @@
 #'
 #' @param length The password length, randomized by default. 
 #' @param include The symbol categories to draw from. Numbers, lower and upper case letters, and symbols are all included by default.
-#' @symbols A string specifying the symbols to include. By default they are drawn from the MSSND example.
+#' @param symbols A string specifying the symbols to include. By default they are drawn from the MSSND example.
 #' @references https://security.berkeley.edu/minimum-security-standards-networked-devices-mssnd#five
-#' @param lambda The mean of the poisson from which to define the probabilty distribution for draws.
+#' @param lambda The mean of the poisson from which to define the probabilty distribution for draws. By specifying an arbitrary distribution it should make it a little harder to brute force guess, compared to picking a default distribution.
 #' @param display Whether to print the result to stdout.
 #'
 password<-function(
@@ -21,7 +21,7 @@ length=10 + rpois(1,10)
 	if('symbols'%in%include) frame$symbols<-strsplit(symbols,split='')
 	frame<-unlist(frame)
 	pw<-sample(frame,length,replace=TRUE
-		,prob=rpois(length(frame),lambda) # sample from an arbitrary probability distribution that makes it a little harder to brute force guess
+		,prob=rpois(length(frame),lambda)
 	)
 	pw<-paste(pw,collapse='')
 	if(display) cat('Congrats, your password is:',pw,'\n')
